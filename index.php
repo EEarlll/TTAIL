@@ -41,7 +41,6 @@ if (isset($_GET['id'])) {
             $stmt2 = $conn->prepare($sql2);
             $stmt2->bind_param("s", $student_no);
             $stmt2->execute();
-            mail("earleustacio@gmail.com","Student Name: $Name","Time Out: $currentTime", "From: sender\'s email");
             sendMail("earleustacio@gmail.com", "Student Name: $Name", "Time Out: $currentTime");    // STC email
         }
     }
