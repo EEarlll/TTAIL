@@ -81,18 +81,20 @@ include 'process/student_fill.php';
                     <tbody style="color:white" id="myTable">
                         <?php
                         if (isset($result2) && isset($result3)) {
-                            // Fetch both result sets independently
                             $entries = $result2->fetch_all(MYSQLI_ASSOC);
                             $timeOuts = $result3->fetch_all(MYSQLI_ASSOC);
 
-                            // Iterate over the entries and display each row
                             foreach ($entries as $index => $entry) {
                                 echo "  <tr class='hovertable clickable-row'>
                                             <td>{$entry['student_no']}</td>
                                             <td>{$entry['entry_id']}</td>
-                                            <td>{$entry['time_in']}</td>
-                                            <td>{$timeOuts[$index]['time_out']}</td>
-                                        </tr>";
+                                            <td>{$entry['time_in']}</td>";
+                                if (isset($timeOuts[$index]['time_out'])) {
+                                    echo "<td>{$timeOuts[$index]['time_out']}</td>";
+                                } else {
+                                    echo "<td></td>";
+                                }
+                                echo "</tr>";
                             }
                         }
                         ?>
