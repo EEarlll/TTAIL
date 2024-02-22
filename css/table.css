@@ -3,7 +3,6 @@ main{
 	padding: 2rem;
 }
 
-
 .searchbar{
 	padding: 6px 60px;
 	font-size: 16px;
@@ -21,6 +20,18 @@ main{
 	appearance: none;
 	border-radius: 60px;
 	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.icons{
+	display: flex; 
+	justify-content: center; 
+	align-items: center;
+	 gap: 1rem; 
+	 margin-left: 1rem; 
+	 cursor: pointer; 
+	 padding: 0px 1rem;
+	 background-color: var(--primary);
+	 border: 0;
 }
 
 .searchbar:focus{
@@ -51,7 +62,7 @@ table {
 }
 
 .table-wrap{
-	height: 670px;
+	height: 550px;
 	overflow-y: scroll;
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2024 at 04:41 AM
+-- Generation Time: Feb 06, 2024 at 06:16 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `account_tbl`
+--
+
+CREATE TABLE `account_tbl` (
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `account_tbl`
+--
+
+INSERT INTO `account_tbl` (`username`, `password`, `id`) VALUES
+('earl', 'earl', 1),
+('admin', 'admin', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `info_tbl`
 --
 
@@ -40,6 +60,9 @@ CREATE TABLE `info_tbl` (
 --
 
 INSERT INTO `info_tbl` (`student_no`, `Section`, `Name`, `Contact_Number`, `pic_path`) VALUES
+('123', 'employee', 'test', '1241', 'uploads/codioful-formerly-gradienta-m_7p45JfXQo-unsplash.jpg'),
+('1512', 'wetwetw', 'wetqetq', 'tqwtqwt', 'uploads/neom-uqAUg1zvMXQ-unsplash.jpg'),
+('4800016663802', 'wqerqwr', 'wqerwqer', 'wqerwqerwqer', ''),
 ('E-13-068', 'Grade 11  - Turquoise Senior High School', 'Calminero, Jetro Marc Cabais', '639178581979', ''),
 ('E-14-065', 'Grade 10 - Diamond', 'Batarra, Sean Daniel Juguilon', '639178181536', ''),
 ('E-14-067', 'Grade 10 - Diamondss', 'Rivera, Timothy Jay Burgoss', '639457054880', ''),
@@ -572,10 +595,10 @@ INSERT INTO `info_tbl` (`student_no`, `Section`, `Name`, `Contact_Number`, `pic_
 ('SHSP-22-113', 'Grade 12 SHS St. Emmanuel - STEM ', 'Cirujales, John Francis Navarro', '639950805436', NULL),
 ('SHSP-22-115', 'Grade 12 SHS St. Elias - HUMSS', 'Pili, Juneau Carson Phoenix', '639178912626', NULL),
 ('SHSP-22-116', 'Grade 12 SHS St. Emmanuel - STEM ', 'Baluyot, John Gabriel Cortejo', '63 922 807 2604', NULL),
-('SHSP-22-118', 'Grade 12 SHS St. Emmanuel - STEM ', 'Inoferio, Jancana Bless Basilides', '639197194572', NULL),
-('SHSP-22-119', 'Grade 12 SHS St. Emmanuel - STEM ', 'Gordon, Jeramae Lyle Zaballero', '639994591073', NULL),
-('SHSP-22-120', 'Grade 12 SHS St. Emmanuel - STEM ', 'Capillanes, Janna Mae Laborera', '639203320515', NULL);
+('SHSP-22-118', 'Grade 12 SHS St. Emmanuel - STEM ', 'Inoferio, Jancana Bless Basilides', '639197194572', NULL);
 INSERT INTO `info_tbl` (`student_no`, `Section`, `Name`, `Contact_Number`, `pic_path`) VALUES
+('SHSP-22-119', 'Grade 12 SHS St. Emmanuel - STEM ', 'Gordon, Jeramae Lyle Zaballero', '639994591073', NULL),
+('SHSP-22-120', 'Grade 12 SHS St. Emmanuel - STEM ', 'Capillanes, Janna Mae Laborera', '639203320515', NULL),
 ('SHSP-22-121', 'Grade 12 SHS St. Emmanuel - STEM ', 'Queroda, Rhancis Jay Catalan', '639164702442', NULL),
 ('SHSP-22-123', 'Grade 12 SHS St. Elias - HUMSS', 'Bautista, Rhenczel Angela Yhana Manalili', '639679240127', NULL),
 ('SHSP-22-124', 'Grade 12 SHS St. Elias - HUMSS', 'Suede, Julian Nicholas Aguilar', '639613114665', NULL),
@@ -766,9 +789,52 @@ INSERT INTO `info_tbl` (`student_no`, `Section`, `Name`, `Contact_Number`, `pic_
 
 CREATE TABLE `time_in_tbl` (
   `entry_id` int(11) NOT NULL,
-  `time_in` timestamp NOT NULL DEFAULT current_timestamp(),
+  `time_in` varchar(255) NOT NULL,
   `student_no` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `time_in_tbl`
+--
+
+INSERT INTO `time_in_tbl` (`entry_id`, `time_in`, `student_no`) VALUES
+(235, '2024-02-01 09:15 AM', '123'),
+(236, '2024-02-02 10:30 AM', '123'),
+(237, '2024-04-03 11:45 AM', '123'),
+(238, '2024-04-04 01:00 PM', '123'),
+(239, '2026-02-05 02:15 PM', '123'),
+(240, '2024-05-06 03:30 PM', '123'),
+(241, '2024-05-07 04:45 PM', '123'),
+(242, '2024-02-08 06:00 PM', '123'),
+(243, '2024-08-09 07:15 PM', '123'),
+(244, '2024-08-10 08:30 PM', '123'),
+(245, '2024-02-11 09:45 PM', '123'),
+(246, '2024-03-12 11:00 PM', '123'),
+(247, '2024-03-13 12:15 AM', '123'),
+(248, '2024-07-14 01:30 AM', '123'),
+(249, '2024-07-15 02:45 AM', '123'),
+(250, '2024-07-16 04:00 AM', '123'),
+(251, '2024-07-17 05:15 AM', '123'),
+(252, '2024-02-18 06:30 AM', '123'),
+(253, '2024-09-19 07:45 AM', '123'),
+(254, '2024-09-20 09:00 AM', '123'),
+(255, '2024-11-21 10:15 AM', '123'),
+(256, '2024-12-22 11:30 AM', '123'),
+(257, '2025-11-23 01:45 PM', '123'),
+(258, '2024-12-24 03:00 PM', '123'),
+(259, '2024-02-25 04:15 PM', '123'),
+(260, '2024-01-26 05:30 PM', '123'),
+(261, '2024-01-27 06:45 PM', '123'),
+(262, '2024-02-28 08:00 PM', '123'),
+(263, '2024/02/01 05:22 PM', '1512'),
+(264, '2024/02/02 01:15 PM', '123'),
+(265, '2024/02/03 02:03 PM', '123'),
+(266, '2024/02/03 02:27 PM', '1512'),
+(267, '2024/02/03 02:27 PM', '1512'),
+(268, '2024/02/03 02:27 PM', '1512'),
+(272, '2024/02/05 02:04 PM', '1512'),
+(273, '2024/02/05 02:20 PM', '123'),
+(274, '2024/02/05 06:18 PM', '4800016663802');
 
 -- --------------------------------------------------------
 
@@ -778,13 +844,59 @@ CREATE TABLE `time_in_tbl` (
 
 CREATE TABLE `time_out_tbl` (
   `entry_id` int(11) NOT NULL,
-  `time_out` timestamp NOT NULL DEFAULT current_timestamp(),
+  `time_out` varchar(255) NOT NULL,
   `student_no` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `time_out_tbl`
+--
+
+INSERT INTO `time_out_tbl` (`entry_id`, `time_out`, `student_no`) VALUES
+(187, '2024-02-01 08:00 AM', '123'),
+(188, '2024-02-02 10:15 AM', '123'),
+(189, '2024-04-03 01:30 PM', '123'),
+(190, '2024-04-04 03:45 PM', '123'),
+(192, '2024-05-06 09:15 PM', '123'),
+(193, '2024-05-07 11:30 PM', '123'),
+(194, '2024-02-08 02:45 AM', '123'),
+(195, '2024-08-09 05:00 AM', '123'),
+(196, '2024-08-10 08:15 AM', '123'),
+(197, '2024-02-11 11:30 AM', '123'),
+(198, '2024-03-12 02:45 PM', '123'),
+(199, '2024-03-13 06:00 PM', '123'),
+(200, '2024-07-14 09:15 PM', '123'),
+(201, '2024-07-15 11:30 PM', '123'),
+(202, '2024-07-16 02:45 AM', '123'),
+(203, '2024-07-17 05:00 AM', '123'),
+(204, '2024-02-18 08:15 AM', '123'),
+(205, '2024-09-19 11:30 AM', '123'),
+(206, '2024-11-20 02:45 PM', '123'),
+(207, '2024-12-21 06:00 PM', '123'),
+(208, '2025-11-22 09:15 PM', '123'),
+(209, '2024-12-23 11:30 PM', '123'),
+(210, '2024-12-24 02:45 AM', '123'),
+(211, '2024-02-25 05:00 AM', '123'),
+(212, '2024-01-26 08:15 AM', '123'),
+(213, '2024-01-27 11:30 AM', '123'),
+(214, '2024-02-28 02:45 PM', '123'),
+(216, '2024/02/01 05:22 PM', '1512'),
+(217, '2024/02/01 06:43 PM', '123'),
+(218, '2024/02/03 02:03 PM', '123'),
+(219, '2024/02/03 02:27 PM', '1512'),
+(220, '2024/02/05 02:04 PM', '1512'),
+(221, '2024/02/05 02:20 PM', '123'),
+(222, '2024/02/05 06:25 PM', '4800016663802');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `account_tbl`
+--
+ALTER TABLE `account_tbl`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `info_tbl`
@@ -811,16 +923,22 @@ ALTER TABLE `time_out_tbl`
 --
 
 --
+-- AUTO_INCREMENT for table `account_tbl`
+--
+ALTER TABLE `account_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `time_in_tbl`
 --
 ALTER TABLE `time_in_tbl`
-  MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 
 --
 -- AUTO_INCREMENT for table `time_out_tbl`
 --
 ALTER TABLE `time_out_tbl`
-  MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- Constraints for dumped tables

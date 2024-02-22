@@ -1,5 +1,7 @@
 <?php
 require 'process/email.php';
+include 'process/db_connection.php';
+date_default_timezone_set('Asia/Singapore');
 
 $student_no = '';
 $Section = '';
@@ -9,7 +11,7 @@ $pic_path = '';
 $time_type = '1';
 
 if (isset($_GET['id'])) {
-    include 'process/db_connection.php';
+
     $conn = OpenCon();
 
     $id = mysqli_real_escape_string($conn, $_GET['id']);
@@ -20,6 +22,16 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    $sqlCheck = "SELECT 
+                EXISTS (SELECT 1 FROM time_in_tbl WHERE student_no = ? AND DATE(time_in) = CURDATE()) AS time_in_exists,
+                EXISTS (SELECT 1 FROM time_out_tbl WHERE student_no = ? AND DATE(time_out) = CURDATE()) AS time_out_exists";
+
+    $stmtCombined = $conn->prepare($sqlCheck);
+    $stmtCombined->bind_param("ss", $id, $id);
+    $stmtCombined->execute();
+    $resultCombined = $stmtCombined->get_result();
+    $resultCheck = $resultCombined->fetch_assoc();
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $student_no = $row['student_no'];
@@ -27,21 +39,20 @@ if (isset($_GET['id'])) {
         $Name = $row['Name'];
         $Contact_Number = $row['Contact_Number'];
         $pic_path = $row['pic_path'];
-        $currentTime = date("Y-m-d H:i:s");
+        $currentTime = date("Y/m/d h:i A");
         $type = "Update";
+        // sendMail("earleustacio@gmail.com", "Student Name: $Name", "Time In: $currentTime");     // STC email
 
-        if ($time_type == '1') {
-            $sql2 = "INSERT INTO time_in_tbl(student_no) VALUES(?)";
+        if ($time_type == '1' && !$resultCheck['time_in_exists']) {
+            $sql2 = "INSERT INTO time_in_tbl(student_no,time_in) VALUES(?, ?)";
             $stmt2 = $conn->prepare($sql2);
-            $stmt2->bind_param("s", $student_no);
+            $stmt2->bind_param("ss", $student_no, $currentTime);
             $stmt2->execute();
-            sendMail("earleustacio@gmail.com", "Student Name: $Name", "Time In: $currentTime");     // STC email
-        } elseif ($time_type == '3') {
-            $sql2 = "INSERT INTO time_out_tbl(student_no) VALUES(?)";
+        } elseif ($time_type == '3' && !$resultCheck['time_out_exists']) {
+            $sql2 = "INSERT INTO time_out_tbl(student_no,time_out) VALUES(?, ?)";
             $stmt2 = $conn->prepare($sql2);
-            $stmt2->bind_param("s", $student_no);
+            $stmt2->bind_param("ss", $student_no, $currentTime);
             $stmt2->execute();
-            sendMail("earleustacio@gmail.com", "Student Name: $Name", "Time Out: $currentTime");    // STC email
         }
     }
     $stmt->close();
@@ -67,7 +78,7 @@ if (isset($_GET['id'])) {
                 <img src="<?php echo isset($pic_path) && $pic_path != '' ? "$pic_path" : "Images/circle.png"; ?>" alt="" id='Pic'>
             </div>
             <form id="urlChangeForm">
-                <input type="text" id="selectedId" onkeydown="handleKeyPress(event)">
+                <input type="text" id="selectedId" onkeydown="handleKeyPress(event)" oninput="checkInput(event)" style="position: absolute; left: -99999999px; bottom: -999999px;" onblur="this.focus()" autofocus>
             </form>
         </div>
         <form class="box" method="post">
@@ -77,25 +88,34 @@ if (isset($_GET['id'])) {
                 <p>NAME</h2>
                 <h1><?php echo (!empty($Section) ? $Section : 'Grade & Section'); ?></h1>
                 <p>GRADE & SECTION</h2>
-                    <input type="button" name="student_no" value="<?php echo $student_no; ?>" style="display: none;">
-                    <input type="button" name="time_in" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
-                    <input type="button" name="time_out" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
+                <div style="margin-top: 1rem;">
+                    <h6><?php if ($time_type == '1') {
+                            echo "Time In";
+                        } elseif ($time_type == '3') {
+                            echo "Time Out";
+                        } ?></h6>
+                    <h6><?php echo date("Y/m/d h:i A"); ?></h6>
+                </div>
+
+                <input type="button" name="student_no" value="<?php echo $student_no; ?>" style="display: none;">
+                <input type="button" name="time_in" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
+                <input type="button" name="time_out" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
             </div>
         </form>
     </div>
     <footer>
         <?php
-            if($time_type == '1'){
-                echo "
+        if ($time_type == '1') {
+            echo "
                 <p id='time_type1' class ='selectedType'>PRESS [ - TIME IN</p>
                 <p id='time_type3'>PRESS ] - TIME OUT</p>
                 ";
-            }else{
-                echo "
+        } else {
+            echo "
                 <p id='time_type1'>PRESS [ - TIME IN</p>
                 <p id='time_type3' class ='selectedType'>PRESS ] - TIME OUT</p>
                 ";
-            }
+        }
         ?>
 
     </footer>
@@ -103,8 +123,20 @@ if (isset($_GET['id'])) {
 <script>
     var curr_time = localStorage.getItem('curr_time') || 1;
 
+    function checkInput(event) {
+        // Get the input element by its ID
+        var inputElement = document.getElementById('selectedId');
+
+        // Check if the entered value is [ or ]
+        if (event.target.value.includes('[') || event.target.value.includes(']')) {
+            // Clear the input if [ or ] is entered
+            inputElement.value = '';
+        }
+    }
+
     function handleKeyGlobal(event) {
         if (event.key === '[' || event.key === ']') {
+            document.getElementById('selectedId').value = ''
             // Set the global variable based on the pressed key
             curr_time = event.key === '[' ? 1 : event.key === ']' ? 3 : curr_time;
             if (curr_time === 1) {
@@ -118,7 +150,7 @@ if (isset($_GET['id'])) {
             console.log('Updated curr_time:', curr_time);
         }
         if (event.key === '/') {
-            window.location.href = "admin.php"
+            window.location.href = "login.php"
         }
     }
 
@@ -138,6 +170,9 @@ if (isset($_GET['id'])) {
     }
     document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('keydown', handleKeyGlobal);
+        window.onload = function() {
+            document.getElementById('selectedId').focus();
+        }
     });
 </script>
 

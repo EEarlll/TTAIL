@@ -1,5 +1,6 @@
 <?php
 include 'process/student_fill.php';
+include 'process/session_check.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +16,9 @@ include 'process/student_fill.php';
     <script type="module" src="js/student_add.js"></script>
 </head>
 
-<body>
+<body style="overflow-y: hidden;">
     <div class="wrapper">
-        <main>
+        <main >
             <div class="main">
                 <div class="box">
                     <div class="inner-box">
@@ -61,8 +62,28 @@ include 'process/student_fill.php';
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="submit" id="<?php echo isset($type) ? "update" : "save"; ?>"><?php echo isset($type) ? "Update" : "Save"; ?></button>
+                        <div class="buttons-container">
+                            <button type="submit" id="<?php echo isset($type) ? "update" : "save"; ?>"><?php echo isset($type) ? "Update" : "Save"; ?></button>
 
+                            <div class="download-container">
+                                <button type="button" id="download">Download</button>
+                                <svg id='prevMonth' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)" width=25>
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M10 7L15 12L10 17" stroke="#1450a3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                                <span id='currentMonth' style="font-size: large;" class="form-control" name='currentMonth'>January</span>
+                                <svg id='nextMonth' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width=25>
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M10 7L15 12L10 17" stroke="#1450a3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -89,6 +110,7 @@ include 'process/student_fill.php';
                                             <td>{$entry['student_no']}</td>
                                             <td>{$entry['entry_id']}</td>
                                             <td>{$entry['time_in']}</td>";
+
                                 if (isset($timeOuts[$index]['time_out'])) {
                                     echo "<td>{$timeOuts[$index]['time_out']}</td>";
                                 } else {
@@ -103,19 +125,96 @@ include 'process/student_fill.php';
             </div>
         </main>
         <!-- sidebar -->
-        <div class=" sidebar">
+        <div class="sidebar">
             <div class="box">
                 <img src="Images/circle.png" alt="" srcset="" id="Pic">
-                <h2 style="font-size: 5rem;padding: 1rem 0;color:var(--primary); font-weight:bolder; font-style:italic">ADMIN</h2>
+                <h2 style="font-size: 2rem;padding: 1rem 0;color:var(--primary); font-weight:bolder; font-style:italic">ADMIN</h2>
                 <div class="menu">
                     <a class="button" href="student.php">ADD</a>
                     <a class="button" href="">EDIT</a>
-                    <a class="button" href="">DELETE</a>
+                    <a class="button" href="" id="delete">DELETE</a>
                     <a class="button" href="admin.php">REPORT</a>
+                    <a class="button" href="register.php">REGISTER</a>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        let currentMonthIndex = new Date().getMonth();
+
+        // DOM elements
+        const prevMonthSvg = document.getElementById("prevMonth");
+        const nextMonthSvg = document.getElementById("nextMonth");
+        const currentMonthSpan = document.getElementById("currentMonth");
+
+        function updateMonthDisplay() {
+            const selectedMonthName = monthNames[currentMonthIndex];
+            currentMonthSpan.textContent = selectedMonthName;
+            currentMonthSpan.value = selectedMonthName;
+        }
+
+        prevMonthSvg.addEventListener("click", function() {
+            if (currentMonthIndex > 0) {
+                currentMonthIndex--;
+            } else {
+                currentMonthIndex = 11; // December
+            }
+            updateMonthDisplay();
+        });
+
+        nextMonthSvg.addEventListener("click", function() {
+            if (currentMonthIndex < 11) {
+                currentMonthIndex++;
+            } else {
+                currentMonthIndex = 0; // January
+            }
+            updateMonthDisplay();
+        });
+
+        // delete
+        document.getElementById("delete").addEventListener("click", function(e) {
+            e.preventDefault();
+            var selectedId = document.getElementById("student_no").value
+
+            if (selectedId) {
+                // Ask for confirmation
+                var confirmed = window.confirm("Are you sure you want to delete this record?");
+
+                if (confirmed) {
+                    var formData = new URLSearchParams();
+                    formData.append("student_no", selectedId);
+
+                    console.log(formData);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "process/student_delete.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            var result = JSON.parse(xhr.responseText);
+                            if (result.ok) {
+                                alert("Data successfully Deleted!");
+                                window.location.href = "admin.php";
+                            }
+                        }
+                    };
+                    xhr.send(formData.toString());
+                }
+            } else {
+                console.error("No row selected.");
+            }
+        });
+
+        updateMonthDisplay();
+
+    })
+</script>
 
 </html>

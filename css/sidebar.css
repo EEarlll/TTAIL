@@ -14,7 +14,7 @@
 }
 #Pic{
     width: 100%;
-    max-width: 150px;
+    max-width: 100px;
     height: auto;
     background-color: var(--primary);
     border-radius: 50%;
