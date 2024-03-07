@@ -93,29 +93,22 @@ include 'process/session_check.php';
                 <table class="table">
                     <thead>
                         <tr style="background-color: antiquewhite;">
-                            <th>STUDENT NO.</th>
-                            <th>ENTRY ID</th>
+                            <th>DAY</th>
                             <th>TIME IN</th>
                             <th>TIME OUT</th>
                         </tr>
                     </thead>
                     <tbody style="color:white" id="myTable">
                         <?php
-                        if (isset($result2) && isset($result3)) {
-                            $entries = $result2->fetch_all(MYSQLI_ASSOC);
-                            $timeOuts = $result3->fetch_all(MYSQLI_ASSOC);
+                        if (isset($result1)) {
+
+                            $entries = $result1->fetch_all(MYSQLI_ASSOC);
 
                             foreach ($entries as $index => $entry) {
                                 echo "  <tr class='hovertable clickable-row'>
-                                            <td>{$entry['student_no']}</td>
-                                            <td>{$entry['entry_id']}</td>
-                                            <td>{$entry['time_in']}</td>";
-
-                                if (isset($timeOuts[$index]['time_out'])) {
-                                    echo "<td>{$timeOuts[$index]['time_out']}</td>";
-                                } else {
-                                    echo "<td></td>";
-                                }
+                                            <td>{$entry['day']}</td>
+                                            <td>{$entry['time_in']}</td>
+                                            <td>{$entry['time_out']}</td>";
                                 echo "</tr>";
                             }
                         }
