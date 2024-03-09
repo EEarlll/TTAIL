@@ -19,8 +19,18 @@ if (isset($_GET['id'])) {
     $pic_path = $result['pic_path'];
     $type = 'Update';
 
-    $sql2 = "SELECT * FROM time_in_tbl WHERE student_no ='$id'";
-    $sql3 = "SELECT * FROM time_out_tbl WHERE student_no ='$id'";
-    $result2 = $conn->query($sql2);
-    $result3 = $conn->query($sql3);
+    $sql = "SELECT 
+                DATE_FORMAT(time_in_tbl.time_in, '%Y-%m-%d') AS day,
+                TIME_FORMAT(time_in_tbl.time_in, '%h:%i %p') AS time_in,
+                TIME_FORMAT(time_out_tbl.time_out, '%h:%i %p') AS time_out
+            FROM 
+                time_in_tbl 
+            LEFT JOIN 
+                time_out_tbl ON DATE_FORMAT(time_in_tbl.time_in, '%Y-%m-%d') = DATE_FORMAT(time_out_tbl.time_out, '%Y-%m-%d')
+            WHERE 
+                time_in_tbl.student_no = '$id'
+            ORDER BY 
+                time_in_tbl.time_in DESC";
+                
+    $result1 = $conn->query($sql);
 }

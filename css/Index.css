@@ -1,0 +1,146 @@
+@font-face {
+    font-family: beba;
+    src: url(../Images2/BebasNeue-Regular.ttf);
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: beba;
+}
+body{
+    background: url("../Images2/jpgtopngconverter-com.png") no-repeat center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    letter-spacing: .5rem;
+    font-size: 7vh;
+}
+
+.main-info{
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 7vh;
+    gap: 1rem;
+}
+
+.box{
+    min-width: 400px;
+    min-height: 400px;
+    max-width: 400px; 
+    max-height:  400px; 
+    background-color: white;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+#Pic{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+
+
+.infos{
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.upper-text{
+    min-width: 500px;
+    background-color: #cdd7eb;
+    border-radius: 50px;
+    padding: 3.5vh;
+    color: #2240ac;
+}
+.lower-text{
+    display: flex;
+    color: #f0edcf;
+    justify-content: space-between;
+    font-size: 4vh;
+    gap: 4rem;
+}
+
+footer{
+    min-width: 100vw;
+    background-color: white;
+    margin-bottom: 2rem;
+    font-size: 7vh;
+    color: #2240ac;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    gap: 4rem;
+}
+
+.bfr{
+    color: #f0edcf;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    font-size: 3vh;
+}
+
+.selectedType{
+    color: rgb(239 68 68);
+}
+
+.marquee {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    height: 70px;
+    overflow-x: hidden;
+  }
+  
+  .track {
+    position: absolute;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee 32s linear infinite;
+  }
+  
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+
+.moving-ad {
+    animation: moveRightLeft 5s linear infinite; 
+  }
+  
+  @keyframes moveRightLeft {
+    from {
+        transform: translateX(0);
+     }
+
+    to {
+        transform: translateX(100%);
+     }
+  }
+
+@media screen and (min-height: 800px) {
+    .box {
+        min-width: 500px;
+        min-height: 500px;
+        max-width: 500px;
+        max-height: 500px;
+    }
+}
