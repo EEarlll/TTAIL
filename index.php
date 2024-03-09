@@ -114,25 +114,20 @@ if (isset($_GET['id'])) {
                 <p id="time_type3">Press F9 - TIME OUT</p>
             </div>
         </div>
-        <form class="box" method="post">
-            <img src="Images/logo.png" alt="" srcset="" style="width: 100%; height: auto; max-width:700px; padding-bottom: 2rem;">
-            <div>
-                <h1><?php echo (!empty($Name) ? $Name : 'First M. Last'); ?></h1>
-                <p>NAME</h2>
-                <h1><?php echo (!empty($Section) ? $Section : 'Grade & Section'); ?></h1>
-                <p>GRADE & SECTION</h2>
-                <div style="margin-top: 1rem;">
-                    <h6><?php if ($time_type == '1') {
-                            echo "Time In";
-                        } elseif ($time_type == '3') {
-                            echo "Time Out";
-                        } ?></h6>
-                    <h6><?php echo date("Y/m/d h:i A"); ?></h6>
-                </div>
+        <input type="button" name="student_no" value="<?php echo $student_no; ?>" style="display: none;">
+        <input type="button" name="time_in" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
+        <input type="button" name="time_out" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
+    </form>
+    <form id="urlChangeForm">
+        <!-- style="position: absolute; left: -99999999px; bottom: -999999px;" onblur="this.focus()" autofocus -->
+        <input type="text" id="selectedId" onkeydown="handleKeyPress(event)" oninput="checkInput(event)" style="position: absolute; left: -99999999px; bottom: -999999px;" onblur="this.focus()" autofocus>
+    </form>
 
-                <input type="button" name="student_no" value="<?php echo $student_no; ?>" style="display: none;">
-                <input type="button" name="time_in" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
-                <input type="button" name="time_out" value="<?php echo date('Y-m-d H:i:s'); ?>" style="display: none;">
+    <span class='bfr'>PRESS F5 - REFRESH</span>
+    <footer>
+        <div class="marquee">
+            <div class="track">
+                <div class="content">&nbsp;MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS MOVING ADS </div>
             </div>
         </div>
     </footer>
@@ -180,7 +175,7 @@ if (isset($_GET['id'])) {
             console.log(userInput);
 
             // Modify the URL
-            var newUrl = "index2.php?id=" + userInput + "&time=" + curr_time;
+            var newUrl = "index.php?id=" + userInput + "&time=" + curr_time;
             window.location.href = newUrl;
 
             console.log("Updated URL:", newUrl);
