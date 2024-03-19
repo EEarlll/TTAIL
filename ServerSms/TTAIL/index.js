@@ -28,8 +28,10 @@ app.get("/sendSMS/:id/:message", (req, res) => {
   let smsSentCount = 0;
 
   const { id, message } = req.params;
+
   const decodedMessage = decodeURIComponent(message.replace(/\+/g, ' ').replace(/\\n/g, '\n'));
-  console.log(id, decodedMessage);
+
+  console.log(reformatPhilippineNumber(id), decodedMessage);
   // res.status(200).json({ id: decodedMessage });
   modem.sendSMS(id, decodedMessage, false, (data) => {
     smsSentCount++;
@@ -49,3 +51,20 @@ app.listen(3000, () => {
     });
   });
 });
+
+
+
+function reformatPhilippineNumber(phoneNumber) {
+  const cleanedNumber = phoneNumber.replace(/\D/g, '');
+
+  if (cleanedNumber.length === 10) {
+      return '63' + cleanedNumber;
+  }
+
+  if (cleanedNumber.length > 11) {
+      return '63' + cleanedNumber.substring(cleanedNumber.length - 10);
+  }
+
+  return '63' + cleanedNumber.substring(1);
+}
+

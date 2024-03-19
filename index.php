@@ -14,16 +14,25 @@ $time_type = '1';
 
 function fast_request($url)
 {
-    $parts=parse_url($url);
-    $fp = fsockopen($parts['host'],isset($parts['port'])?$parts['port']:80,$errno, $errstr, 30);
-    $out = "GET ".$parts['path']." HTTP/1.1\r\n";
-    $out.= "Host: ".$parts['host']."\r\n";
-    $out.= "Content-Length: 0"."\r\n";
-    $out.= "Connection: Close\r\n\r\n";
+    $parts = parse_url($url);
+    $fp = @fsockopen($parts['host'], isset($parts['port']) ? $parts['port'] : 80, $errno, $errstr, 30);
+    
+    if ($fp) {
+        $out = "GET " . $parts['path'] . " HTTP/1.1\r\n";
+        $out .= "Host: " . $parts['host'] . "\r\n";
+        $out .= "Content-Length: 0\r\n";
+        $out .= "Connection: Close\r\n\r\n";
 
-    fwrite($fp, $out);
-    fclose($fp);
+        fwrite($fp, $out);
+        fclose($fp);
+        return true; // Request sent successfully
+    } else {
+        // Handle error
+        echo "Error: $errno - $errstr";
+        return false; // Request failed
+    }
 }
+
 
 if (isset($_GET['id'])) {
 
