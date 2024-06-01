@@ -46,8 +46,11 @@ This project involves the development of an advanced attendance system using PHP
 
 ## Live Usage
 Here's a sneak peek of our application in action:
-
-![App Preview](https://example.com/app-preview.png)
+<div style="display:flex; flex-direction:row">
+   <img src="storage/Screenshot%202024-06-01%20224743.png" height="250rm">
+<img src="storage/Screenshot%202024-06-01%20225427.png" height="250rm">
+<img src="storage/Screenshot%202024-06-01%20225530.png" height="250rm">
+</div>
 
 ## Contact
 If you have any questions or feedback, you can reach out to me at `earleustacio@gmail.com`.
