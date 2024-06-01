@@ -44,5 +44,10 @@ This project involves the development of an advanced attendance system using PHP
 - **Monitoring Attendance:** Administrators can monitor and manage attendance records through the admin panel.
 - **Receiving Notifications:** Parents or guardians receive SMS notifications based on the attendance data.
 
+## Live Usage
+Here's a sneak peek of our application in action:
+
+![App Preview](https://example.com/app-preview.png)
+
 ## Contact
 If you have any questions or feedback, you can reach out to me at `earleustacio@gmail.com`.
