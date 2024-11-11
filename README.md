@@ -13,6 +13,9 @@ This project involves the development of an advanced attendance system using PHP
 3. **DTR (Daily Time Record) Logging**
    - **Comprehensive Tracking:** The system logs detailed attendance data, including timestamps for arrivals and departures.
    - **Report Generation:** Administrators can generate and review attendance reports for individual students or the entire class.
+4. **Cash Management System**
+   - **Real-Time Balance Updates:** Students can deposit or withdraw cash from their accounts linked to their student ID, with real-time updates to their balance.
+   - **Automatic Balance Tracking:** The system logs each transaction and automatically updates the student’s balance, maintaining accurate financial records.
 
 ## Technical Implementation
 ### Technologies Used
