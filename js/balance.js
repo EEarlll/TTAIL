@@ -69,5 +69,16 @@ document.getElementById("Info").addEventListener("click", function (e) {
   e.preventDefault();
   var userInput = document.getElementById("student_no").value;
   var newUrl = "balance.php?id=" + userInput;
+  localStorage.setItem("focusTarget", "Cash");
   window.location.href = newUrl;
 });
+
+window.onload = function () {
+  // Check if we need to focus the 'Cash' input
+  if (localStorage.getItem("focusTarget") === "Cash") {
+    document.getElementById("Cash").focus();
+
+    // Remove the focus flag after applying the focus
+    localStorage.removeItem("focusTarget");
+  }
+};
