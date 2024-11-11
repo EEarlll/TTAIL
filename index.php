@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
 <body>
     <header>
         <div class="logo">
-            <img src="Images2/LOGO.png" alt="" srcset="" style="width: 77%; padding-left: 1rem;">
+            <img src="Images/LOGO.png" alt="" srcset="" style="width: 77%; padding-left: 1rem;">
         </div>
         <div class="time_preview">
             <p><?php echo date("Y/m/d") ?></p>

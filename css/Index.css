@@ -1,6 +1,6 @@
 @font-face {
     font-family: beba;
-    src: url(../Images2/BebasNeue-Regular.ttf);
+    src: url(../Images/BebasNeue-Regular.ttf);
 
 }
 
@@ -11,7 +11,7 @@
     font-family: beba;
 }
 body{
-    background: url("../Images2/jpgtopngconverter-com.png") no-repeat center fixed;
+    background: url("../Images/jpgtopngconverter-com.png") no-repeat center fixed;
     background-size: cover;
     min-height: 100vh;
     display: flex;
