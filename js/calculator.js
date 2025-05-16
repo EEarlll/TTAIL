@@ -31,6 +31,16 @@ function handleCalculator() {
   }
 }
 
+function handleCalculatorButton(value) {
+  const inputElement = document.getElementById("Cash");
+  if(value === "C"){
+    inputElement.value = "";
+    return; 
+  }
+  inputElement.value += value;
+  inputElement.focus();
+}
+
 // Add event listener for Enter key to trigger calculation
 document.getElementById("Cash").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {

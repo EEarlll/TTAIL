@@ -13,6 +13,10 @@ This project involves the development of an advanced attendance system using PHP
 3. **DTR (Daily Time Record) Logging**
    - **Comprehensive Tracking:** The system logs detailed attendance data, including timestamps for arrivals and departures.
    - **Report Generation:** Administrators can generate and review attendance reports for individual students or the entire class.
+4. **Balance Transaction via QR Code**
+      - **Cashless Payments:** Students and staff can perform balance transactions (such as adding funds or making payments) by scanning their QR codes.
+      - **Secure Processing:** Each transaction is securely logged and linked to the individual's account for transparency and accountability.
+      - **Instant Updates:** Account balances are updated in real-time, and users receive confirmation of successful transactions.
 
 ## Technical Implementation
 ### Technologies Used

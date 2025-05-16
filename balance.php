@@ -68,7 +68,10 @@ include 'process/session_check.php';
                             </div>
                             <div class="col">
                                 <input class="input-design btn-control" style="margin-bottom: 1rem;" name='cash_given' value='<?php echo $cash_given ?>' aria-label="Amount (to the nearest dollar)" id="Cash">
-                                <button type="button" class="btn btn-primary" onclick="handleCalculator()">Calculate Change</button>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <button type="button" class="btn btn-primary" onclick="handleCalculator()">Calculate Change</button>
+                                    <button type="button" class="btn btn-primary" onclick="handleCalculatorButton('C')">C</button>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
